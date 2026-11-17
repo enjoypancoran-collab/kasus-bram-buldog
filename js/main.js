@@ -178,7 +178,7 @@ async function playFloor(f) {
   const holoCam = (side, h) => {
     if (h === hk && set.holoCamK) return set.holoCamK(kSide);
     if (h === ha && set.holoCamA) return set.holoCamA(aSide);
-    return E.camTo([side * 0.6, 1.9, 3.2], [side * 1.55, 1.9, -1.4], 1.0);
+    return E.camTo([side * 0.5, 2.0, 3.4], [side * 1.85, 2.0, -1.5], 1.0);
   };
   let holoOwner = null;
   const ctx = {

@@ -52,7 +52,7 @@ export function lights(g, o = {}) {
 }
 // posisi standar adegan lantai
 export const SPOT = { bram: [0, 1.15], left: [-1.6, -0.45], right: [1.6, -0.45], enter: [0, 4.5] };
-function holoPos(h, side, y = 2.1, z = -1.55, x = 1.75) { h.position.set(side * x, y, z); h.rotation.y = -side * 0.22; return h; }
+function holoPos(h, side, y = 2.1, z = -1.55, x = 1.75) { h.position.set(side * (x + 0.55), y + 0.25, z - 0.15); h.rotation.y = -side * 0.28; return h; }
 
 // panel diagram alur bertahap
 function drawFlow(x, W, H, boxes, stage, accent = '#ffd66b') {
