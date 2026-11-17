@@ -107,7 +107,7 @@ export function courtroom() {
   // jendela kaca patri
   const stained = [];
   for (const sx of [-1, 1]) for (let k = 0; k < 2; k++) {
-    const t = canvasTexture(256, 512, (x, W, H) => { const cols = ['#c0392b', '#2980b9', '#f1c40f', '#27ae60', '#8e44ad']; for (let i = 0; i < 8; i++) for (let j = 0; j < 16; j++) { x.fillStyle = cols[(i * 3 + j * 7 + k) % 5]; x.fillRect(i * 32, j * 32, 31, 31); } x.strokeStyle = '#111'; x.lineWidth = 10; x.beginPath(); x.moveTo(128, 100); x.lineTo(128, 400); x.moveTo(48, 160); x.lineTo(208, 160); x.stroke(); x.beginPath(); x.arc(48, 230, 40, 0, Math.PI); x.arc(208, 230, 40, 0, Math.PI); x.stroke(); });
+    const t = canvasTexture(256, 512, (x, W, H) => { const cols = ['#c0392b', '#2980b9', '#f1c40f', '#27ae60', '#8e44ad']; for (let i = 0; i < 8; i++) for (let j = 0; j < 16; j++) { x.fillStyle = cols[(i * 3 + j * 7 + k) % 5]; x.fillRect(i * 32, j * 32, 31, 31); } x.strokeStyle = '#111'; x.lineWidth = 8; for (let r = 0; r < 4; r++) { x.beginPath(); x.moveTo(128, 60 + r * 100); x.lineTo(208, 110 + r * 100); x.lineTo(128, 160 + r * 100); x.lineTo(48, 110 + r * 100); x.closePath(); x.stroke(); } });
     const w = new THREE.Mesh(new THREE.PlaneGeometry(2.6, 6), new THREE.MeshBasicMaterial({ map: t })); w.position.set(sx * 10.95, 7.5, -7 + k * 6); w.rotation.y = -sx * Math.PI / 2; g.add(w); stained.push(w);
   }
   // cahaya miring berdebu

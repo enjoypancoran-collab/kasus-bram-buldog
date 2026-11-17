@@ -87,8 +87,9 @@ async function playRound() {
     state.picks = S.FLOORS.map((f, i) => { const t = pk[i] === 'a' ? 'arsitek' : 'karya'; const c = t === 'arsitek' ? f.arsitek : f.karya; return { floor: f.n, type: t, title: c.title, by: S.CAST[t === 'arsitek' ? f.arsitekBy : f.karyaBy].name, picker: 'Peserta ' + (i + 1), court: c.court }; });
     ui.pool.splice(0, 14 * (state.round - 1) + 7);
   } else {
-    if (state.round === 1) await prolog(); else await round2Intro();
-    for (const f of S.FLOORS) { skipScene = false; state.picks.push(await playFloor(f)); ui.bag(state.picks); }
+    const from = JUMP && JUMP[0] === 'f' ? +JUMP.slice(1) : 1;
+    if (from === 1) { if (state.round === 1) await prolog(); else await round2Intro(); }
+    for (const f of S.FLOORS) { if (f.n < from) continue; skipScene = false; state.picks.push(await playFloor(f)); ui.bag(state.picks); }
   }
   skipScene = false;
   await toCourt();

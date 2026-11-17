@@ -124,7 +124,7 @@ export function holo(w, h, draw, opts = {}) {
   const W = 1024, H = Math.round(1024 * h / w);
   const tex = canvasTexture(W, H, () => {});
   const g = new THREE.Group();
-  const mat = new THREE.MeshBasicMaterial({ map: tex, transparent: true, opacity: 0, depthWrite: false, side: THREE.DoubleSide, blending: THREE.AdditiveBlending });
+  const mat = new THREE.MeshBasicMaterial({ map: tex, transparent: true, opacity: 0, depthWrite: false, side: THREE.DoubleSide });
   const plane = new THREE.Mesh(new THREE.PlaneGeometry(w, h), mat); g.add(plane);
   const col = opts.color || '#5fd0ff';
   const frame = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.PlaneGeometry(w, h)), new THREE.LineBasicMaterial({ color: col, transparent: true, opacity: 0 }));
@@ -132,7 +132,7 @@ export function holo(w, h, draw, opts = {}) {
   let t = 0, shown = 0, target = 0, stage = 0;
   const redraw = () => {
     const x = tex.userData.ctx; x.clearRect(0, 0, W, H);
-    x.fillStyle = 'rgba(20,80,120,0.28)'; x.fillRect(0, 0, W, H);
+    x.fillStyle = 'rgba(6,24,42,0.86)'; x.fillRect(0, 0, W, H); x.strokeStyle = 'rgba(95,208,255,0.9)'; x.lineWidth = 10; x.strokeRect(5, 5, W - 10, H - 10);
     draw(x, W, H, t, stage);
     x.fillStyle = 'rgba(255,255,255,0.05)'; for (let y = (t * 60) % 8; y < H; y += 8) x.fillRect(0, y, W, 2);
     tex.needsUpdate = true;
@@ -142,7 +142,7 @@ export function holo(w, h, draw, opts = {}) {
     show() { target = 1; }, hide() { target = 0; }, setStage(s) { stage = s; redraw(); },
     tick(dt) {
       t += dt; shown += (target - shown) * Math.min(1, dt * 5);
-      const fl = 0.85 + Math.sin(t * 23) * 0.05 + (Math.random() < 0.02 ? -0.3 : 0);
+      const fl = 0.95 + Math.sin(t * 23) * 0.03 + (Math.random() < 0.015 ? -0.25 : 0);
       mat.opacity = shown * fl; frame.material.opacity = shown;
       g.scale.setScalar(0.6 + shown * 0.4); g.visible = shown > 0.01;
       if (opts.animate !== false) redraw();

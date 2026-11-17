@@ -77,8 +77,11 @@ function lobby() {
   // lemari piala
   for (let i = -2; i <= 2; i++) {
     const cab = new THREE.Group(); cab.position.set(i * 2.25, 0, -4.6); g.add(cab);
-    B(cab, 2, 3.6, 0.6, '#5a3a22', [0, 1.8, 0]);
-    B(cab, 1.84, 3.4, 0.05, '#bfe6ff', [0, 1.85, 0.31], { m: { transparent: true, opacity: 0.25 } });
+    B(cab, 2, 3.6, 0.06, '#4a2e1a', [0, 1.8, -0.28]);
+    for (const sx of [-1, 1]) B(cab, 0.08, 3.6, 0.6, '#5a3a22', [sx * 0.96, 1.8, 0]);
+    B(cab, 2, 0.12, 0.6, '#5a3a22', [0, 3.56, 0]); B(cab, 2, 0.12, 0.6, '#5a3a22', [0, 0.06, 0]);
+    B(cab, 1.84, 3.4, 0.03, '#d8f0ff', [0, 1.85, 0.31], { m: { transparent: true, opacity: 0.12 }, cast: false });
+    const cl = new THREE.PointLight('#fff2c4', 3, 2.5); cl.position.set(0, 3.2, 0.2); cab.add(cl);
     for (let r = 0; r < 4; r++) {
       B(cab, 1.84, 0.04, 0.5, '#7a5233', [0, 0.45 + r * 0.82, 0.02]);
       for (let k = 0; k < 4; k++) {
@@ -283,7 +286,8 @@ function immersive() {
 // LANTAI 4 — Ruang Data
 // =====================================================================
 function dataRoom() {
-  const g = room({ w: 13, d: 10, h: 4.5, floor: '#1c2633', wall: '#16202b', ceil: '#0f151d', hemi: 0.55, key: 1.1, keyC: '#cfe6ff' });
+  const g = room({ w: 13, d: 10, h: 4.5, floor: '#2a3646', wall: '#22303f', ceil: '#141c26', hemi: 1.0, key: 1.7, keyC: '#e6f2ff' });
+  for (const x of [-3, 3]) { const pl = new THREE.PointLight('#5fc0ff', 12, 9); pl.position.set(x, 3.2, 0.5); g.add(pl); }
   const leds = [];
   for (const sx of [-1, 1]) for (let i = 0; i < 4; i++) {
     const r = new THREE.Group(); r.position.set(sx * 4.9, 0, 2.6 - i * 1.6); g.add(r);
@@ -375,7 +379,7 @@ function aiLab() {
   const shields = new THREE.Group(); g.add(shields); shields.visible = false;
   const labels = ['Sumber Terkurasi', 'Keamanan Data', 'Pemeriksaan Kesalahan', 'Penanggung Jawab'];
   const rings = labels.map((l, i) => {
-    const s = new THREE.Mesh(new THREE.SphereGeometry(0.45 + i * 0.18, 28, 18), new THREE.MeshBasicMaterial({ color: ['#58d0ff', '#4dff88', '#ffd66b', '#c58bff'][i], transparent: true, opacity: 0, side: THREE.DoubleSide, depthWrite: false, blending: THREE.AdditiveBlending }));
+    const s = new THREE.Mesh(new THREE.SphereGeometry(0.45 + i * 0.18, 28, 18), new THREE.MeshBasicMaterial({ color: ['#1f8fd8', '#1faa55', '#d9a520', '#8a4fd8'][i], transparent: true, opacity: 0, side: THREE.DoubleSide, depthWrite: false }));
     shields.add(s);
     const lab = sign(l, 1.4, 0.28, { bg: '#0a2240', color: '#e6f6ff', border: ['#58d0ff', '#4dff88', '#ffd66b', '#c58bff'][i], basic: true });
     lab.position.set((i % 2 ? 1 : -1) * 1.5, 0.55 - i * 0.38, 0.3); shields.add(lab); lab.visible = false; s.userData.lab = lab;
@@ -386,14 +390,14 @@ function aiLab() {
     const o = new THREE.Group();
     o.userData = { show() { tgtA = 1; shields.visible = true; glitching = 0; }, hide() { tgtA = 0; }, setStage(s) { stA = s; }, tick(dt, t) {
       curA += (tgtA - curA) * Math.min(1, dt * 3); shields.visible = curA > 0.02; shields.position.copy(robot.position);
-      rings.forEach((r, i) => { const on = stA >= 1 || i === 0; r.material.opacity = curA * (on ? 0.16 : 0.03) * (0.8 + Math.sin(t * 3 + i) * 0.2); r.rotation.y = t * (0.3 + i * 0.1); r.userData.lab.visible = curA > 0.5 && on; r.userData.lab.lookAt(E.camera.position); });
+      rings.forEach((r, i) => { const on = stA >= 1 || i === 0; r.material.opacity = curA * (on ? 0.13 : 0.03) * (0.8 + Math.sin(t * 3 + i) * 0.2); r.rotation.y = t * (0.3 + i * 0.1); r.userData.lab.visible = curA > 0.5 && on; r.userData.lab.lookAt(E.camera.position); });
     } };
     return o;
   };
   return {
     g, bg: new THREE.Color('#e8eef4'), holoK, holoA, robot,
-    holoCamA: () => E.camTo([0, 1.9, 2.4], [0, 1.6, -1.2], 1.2),
-    focusRobot: () => E.camTo([0.6, 1.8, 0.9], [0, 1.6, -1.2], 0.8),
+    holoCamA: () => E.camTo([0, 2.1, 3.9], [0, 1.5, -1.2], 1.2),
+    focusRobot: () => E.camTo([0.7, 1.9, 1.6], [0, 1.6, -1.2], 0.8),
     glitch() { glitching = 1; audio.sfx('glitch', 0.9); bubble.visible = true; E.shake(0.05, 0.6); },
     async intro(bram) {
       E.cut([2.6, 1.7, 6.0], [0, 1.3, 3.0]);
