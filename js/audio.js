@@ -31,13 +31,14 @@ export const audio = {
       a.currentTime = 0; a.volume = muted ? 0 : 1;
       let done = false;
       const fin = () => { if (done) return; done = true; a.onended = null; clearTimeout(guard); current = null; res(); };
-      const guard = setTimeout(fin, (this.duration(id) + 2.5) * 1000);
+      let guard; const arm = (ms) => { clearTimeout(guard); guard = setTimeout(() => { if (current && current.paused) arm(1000); else fin(); }, ms); }; arm((this.duration(id) + 2.5) * 1000);
       a.onended = fin;
       current = { a, fin };
       if (onSkipReg) onSkipReg(() => { a.pause(); fin(); });
       a.play().catch(() => setTimeout(fin, this.duration(id) * 1000));
     });
   },
+  pauseVoice(on) { if (current) { if (on) current.a.pause(); else current.a.play().catch(() => {}); current.paused = on; } },
   stopVoice() { if (current) { current.a.pause(); current.fin(); } },
   sfx(name, vol = 0.8) {
     const src = BASE + 'sfx/' + name + '.mp3';

@@ -37,6 +37,7 @@ async function play(beats, ctx = {}) {
     if (who) who.setTalk(false);
     audio.duck(false);
     if (!skipScene) await E.wait(0.18);
+    while (ui.paused) await E.wait(0.2);
   }
   ui.hideDialog();
 }

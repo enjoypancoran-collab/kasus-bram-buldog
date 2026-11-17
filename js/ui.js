@@ -8,7 +8,7 @@ const Q = new URLSearchParams(location.search);
 export const AUTO = Q.has('auto');
 const autoDelay = (fn, ms = 400) => AUTO && setTimeout(fn, ms);
 export const ui = {
-  pool: [], allNames: [],
+  pool: [], allNames: [], paused: false,
   init() {
     const adv = () => { if (advanceFn) advanceFn(); };
     $('dialog').addEventListener('click', adv);
@@ -17,6 +17,9 @@ export const ui = {
       if (e.code === 'Space' || e.code === 'Enter') { e.preventDefault(); adv(); }
     });
     $('skipBtn').onclick = () => { if (skipSceneFn) skipSceneFn(); };
+    const tp = () => { this.paused = !this.paused; $('pauseBtn').textContent = this.paused ? '▶ Lanjut' : '⏸ Jeda'; $('pausedTag').classList.toggle('hidden', !this.paused); audio.pauseVoice(this.paused); };
+    $('pauseBtn').onclick = tp;
+    window.addEventListener('keydown', (e) => { if (e.target.tagName !== 'TEXTAREA' && e.code === 'KeyP') tp(); });
     $('muteBtn').onclick = () => { $('muteBtn').textContent = audio.toggleMute() ? '🔇' : '🔊'; };
     $('fsBtn').onclick = () => { document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen().catch(() => {}); };
     $('bagBtn').onclick = () => $('bagList').classList.toggle('hidden');
