@@ -283,8 +283,8 @@ async function trial() {
       hakimLean: () => { hakim.gesture('point', 2); camHakim(); return 'cam'; },
       liftBag: () => { bram.gesture('lift', 1.6); },
       rise: () => { riseBench(); return 'cam'; },
-      sad: () => { setTimeout(() => { audio.music('sad', 0.4); audio.sfx('aww', 0.8); ct.crowd.forEach(c => c.gesture('sad', 6)); wendi.gesture('sad', 6); bram.gesture('sad', 3); ct.signs.forEach(s => E.tween(1.2, e => s.rotation.x = -e * 1.2)); }, 900); },
-      celebrate: () => { setTimeout(() => { audio.music('win', 0.5); audio.sfx('cheer', 0.9); audio.sfx('confetti', 0.8); confetti(ct.g, new THREE.Vector3(0, 9, 2)); ct.crowd.forEach((c, i) => setTimeout(() => c.gesture('cheer', 5), i * 60)); wendi.gesture('cheer', 5); bram.gesture('cheer', 4); E.camTo([0, 3.2, 9], [0, 3.5, -4], 1.4); }, 800); },
+      sad: () => { setTimeout(() => { audio.music('sad', 0.4); audio.sfx('aww', 0.8); ct.crowd.forEach(c => c.gesture('sad', 6)); wendi.gesture('sad', 6); bram.gesture('sad', 3); ct.signs.forEach(s => E.tween(1.2, e => s.rotation.x = -e * 1.2)); E.camTo([0.5, 3.0, -2.6], [0, 1.4, 4.5], 1.6); }, 900); },
+      celebrate: () => { setTimeout(() => { audio.music('win', 0.5); audio.sfx('cheer', 0.9); audio.sfx('confetti', 0.8); confetti(ct.g, new THREE.Vector3(0, 9, 2)); ct.crowd.forEach((c, i) => setTimeout(() => c.gesture('cheer', 5), i * 60)); wendi.gesture('cheer', 5); bram.gesture('cheer', 4); bram.faceTo(0, 8); wendi.faceTo(0, 8); E.camTo([0.5, 3.4, -3.2], [0, 1.4, 4.5], 1.4); }, 800); },
       calm: () => { camHakim(); return 'cam'; },
       blueprint: () => { const bp = hakim.hold('map', 0); bp.scale.setScalar(2.2); camHakim(); return 'cam'; },
     },
@@ -318,7 +318,7 @@ async function trial() {
   // juru bicara (putaran 2)
   if (state.round >= 2 && ui.pool.length > 0) {
     await play([S.SPOKES[0]], ctx);
-    E.camTo([0, 2.6, 8], [0, 2, 0], 1.0);
+    E.camTo([0.5, 3.0, -2.8], [0, 1.5, 4.5], 1.0);
     await ui.spokes();
     await play([S.SPOKES[1]], ctx);
   }

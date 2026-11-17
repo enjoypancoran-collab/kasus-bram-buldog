@@ -147,7 +147,7 @@ export function holo(w, h, draw, opts = {}) {
       const fl = 0.95 + Math.sin(t * 23) * 0.03 + (Math.random() < 0.015 ? -0.25 : 0);
       mat.opacity = shown * fl; frame.material.opacity = shown;
       g.scale.setScalar(0.6 + shown * 0.4); g.visible = shown > 0.01;
-      if (opts.animate !== false) redraw();
+      if (opts.animate !== false && shown > 0.02) redraw();
     },
   };
   g.visible = false;
