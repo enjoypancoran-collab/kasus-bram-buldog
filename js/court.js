@@ -133,7 +133,7 @@ export function courtroom() {
   // Meteran Putusan di dinding belakang
   const meterTex = canvasTexture(1024, 600, () => {});
   const meter = new THREE.Mesh(new THREE.PlaneGeometry(6, 3.5), new THREE.MeshBasicMaterial({ map: meterTex, transparent: true }));
-  meter.position.set(0, 10.6, -10.95); g.add(meter);
+  meter.position.set(6.6, 8.6, -10.6); meter.rotation.y = -0.22; g.add(meter);
   let needle = 0, needleT = 0, zoneLit = -1;
   const ZONES = [[0, 2.5, '#d9443a', 'LEVEL PRODUKSI'], [2.5, 3.5, '#e3b13b', 'BELUM CUKUP'], [3.5, 5.5, '#3fbf6f', 'SEIMBANG'], [5.5, 7, '#d9443a', 'DI ATAS KERTAS']];
   const drawMeter = () => {

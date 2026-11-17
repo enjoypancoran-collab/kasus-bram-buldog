@@ -302,12 +302,12 @@ export class Character {
         break;
       }
       case 'judgeWig': {
-        H(sph(hr * 1.18), [0, 0.04, -0.02], [1.05, 1.0, 1.05]);
-        for (const sx of [-1, 1]) for (let k = 0; k < 5; k++) H(sph(0.065, 12, 10), [sx * hr * 1.15, -0.04 - k * 0.075, -0.03], null, false);
+        capTop(1.2, 0.05, 1.05); H(sph(hr * 1.12), [0, 0.0, -0.075], [1.08, 1.0, 1.0]);
+        for (const sx of [-1, 1]) for (let k = 0; k < 4; k++) H(sph(0.07, 12, 10), [sx * (hr * 1.18 + k * 0.012), -0.02 - k * 0.07, -0.07 - k * 0.012], null, false);
         for (let k = 0; k < 5; k++) H(sph(0.07, 12, 10), [((k % 2) - 0.5) * 0.08, -0.06 - k * 0.07, -hr * 1.05], null, false);
         break;
       }
-      case 'clerkWig': H(sph(hr * 1.1), [0, 0.04, -0.02], [1, 0.9, 1]); for (const sx of [-1, 1]) for (let k = 0; k < 2; k++) H(cyl(0.035, 0.035, 0.08, 10), [sx * hr * 1.08, -0.01 - k * 0.06, -0.01], null, false).rotation.x = Math.PI / 2; break;
+      case 'clerkWig': capTop(1.12, 0.04); H(sph(hr * 1.05), [0, 0.0, -0.07], [1, 0.9, 1]); for (const sx of [-1, 1]) for (let k = 0; k < 2; k++) H(cyl(0.035, 0.035, 0.08, 10), [sx * hr * 1.08, -0.01 - k * 0.06, -0.01], null, false).rotation.x = Math.PI / 2; break;
       case 'bald': this.m(sph(0.03), '#ffffff', head, [-0.05, hr * 0.85, 0.05], null, false, { transparent: true, opacity: 0.45 }); break;
     }
   }

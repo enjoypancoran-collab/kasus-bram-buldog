@@ -311,7 +311,7 @@ async function trial() {
     audio.sfx('whoosh', 0.6);
     await E.tween(1.0, e => { paper.position.lerpVectors(p0, p1, e); paper.position.y += Math.sin(e * Math.PI) * 2; paper.rotation.y = e * 10; });
     ct.g.remove(paper); audio.sfx('bag', 0.7);
-    E.camTo([0, 9.2, 4.5], [0, 9.6, -10], 0.8);
+    E.camTo([2.6, 8.4, 5.0], [3.2, 8.6, -10], 0.8);
     if (p.type === 'arsitek') { arsitek++; await ct.setNeedle(arsitek); ct.g.userData.tilt = -0.06 * arsitek / 7; } else await ct.wobble();
     const rr = S.REACT[p.type][rc[p.type]++ % 3];
     await play([rr], ctx);
@@ -327,7 +327,7 @@ async function trial() {
   await play(S.DELIB, ctx);
   await E.wait(1.0);
   ct.lightZone({ A: 0, B: 1, C: 2, D: 3 }[verdict]);
-  E.camTo([0, 9.2, 4.5], [0, 10, -10], 0.8); await E.wait(1.4);
+  E.camTo([2.6, 8.4, 5.0], [3.2, 8.8, -10], 0.8); await E.wait(1.4);
   const v = S.VERDICTS[verdict];
   const stampAt = v.beats.findIndex(b => (b.do || []).includes('gavel'));
   await play(v.beats.slice(0, stampAt + 1), ctx);
