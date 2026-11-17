@@ -26,7 +26,7 @@ async function play(beats, ctx = {}) {
     if (b.cam && ctx.cams?.[b.cam]) { ctx.cams[b.cam](); camDone = true; }
     if (!camDone) {
       if (ctx.camFor) camDone = ctx.camFor(b, who) === true;
-      if (!camDone && present) E.focus(who, { side: who.root.position.x < 0 ? -0.6 : 0.6, ...(ctx.focusOpt?.(b.s) || {}) });
+      if (!camDone && present) E.focus(who, who.id === 'bram' ? { dist: 1.8, side: 0.35 } : { dist: 1.6, side: 1.25, outward: true, ...(ctx.focusOpt?.(b.s) || {}) });
     }
     if (present) { const hp = headPos(who); for (const c of Object.values(E.chars)) if (c !== who && c.root.parent) c.lookAtPoint(hp); who.targetYaw = 0; }
     if (who) who.setTalk(true);
@@ -175,8 +175,8 @@ async function playFloor(f) {
   if (!skipScene) await set.intro(bram); else { bram.place(...SPOT.bram, Math.PI); }
   bram.faceTo(0, -2);
   const holoCam = (side, h) => {
-    if (h === hk && set.holoCamK) return set.holoCamK();
-    if (h === ha && set.holoCamA) return set.holoCamA();
+    if (h === hk && set.holoCamK) return set.holoCamK(kSide);
+    if (h === ha && set.holoCamA) return set.holoCamA(aSide);
     return E.camTo([side * 0.6, 1.9, 3.2], [side * 1.55, 1.9, -1.4], 1.0);
   };
   let holoOwner = null;
@@ -186,7 +186,7 @@ async function playFloor(f) {
       hideHoloK: () => { hk.userData.hide(); if (f.set === 'studio') set.dimForTrailer(false); if (holoOwner === kc) holoOwner = null; },
       holoA: () => { ha.userData.show(); audio.sfx('holo', 0.6); holoOwner = ac; ac.gesture('point', 2.0); holoCam(aSide, ha); return 'cam'; },
       holoA2: () => { ha.userData.setStage(1); audio.sfx('pop', 0.6); ac.gesture('point', 1.6); },
-      weigh: () => { bram.gesture('weigh', 2.6); E.camTo([0, 1.9, 3.6], [0, 1.4, 0.2], 0.9); return 'cam'; },
+      weigh: () => { bram.gesture('weigh', 2.6); E.camTo([0.9, 3.3, 4.4], [0, 0.9, -0.3], 0.9); return 'cam'; },
       glitch: () => { set.glitch(); fajarPanic(); return 'cam'; },
       vrOn: () => { bram.vr = bram.vr || addVR(bram); bram.vr.visible = true; },
       vrOff: () => { if (bram.vr) bram.vr.visible = false; },
@@ -202,7 +202,7 @@ async function playFloor(f) {
   if (bram.vr) bram.vr.visible = false;
   hk.userData.hide(); ha.userData.hide(); if (f.set === 'studio') set.dimForTrailer(false);
   // pilihan
-  E.camTo([0, 2.4, 5.4], [0, 1.4, -0.6], 1.0);
+  E.camTo([0, 3.6, 4.9], [0, 0.8, -0.4], 1.0);
   kc.lookAtPoint(headPos(bram)); ac.lookAtPoint(headPos(bram));
   const card = (who, c, type) => ({ ...c, type, by: who, byName: S.CAST[who].name });
   const cards = kSide < 0 ? [card(f.karyaBy, f.karya, 'karya'), card(f.arsitekBy, f.arsitek, 'arsitek')] : [card(f.arsitekBy, f.arsitek, 'arsitek'), card(f.karyaBy, f.karya, 'karya')];

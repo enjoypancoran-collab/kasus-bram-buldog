@@ -65,10 +65,12 @@ export const E = {
   },
   // kamera menyorot tokoh yang sedang bicara
   focus(c, opt = {}) {
-    const dist = opt.dist ?? 2.3, side = opt.side ?? 0.55, h = opt.h ?? 0.05;
+    const dist = opt.dist ?? 1.75, h = opt.h ?? 0.05;
+    let side = opt.side ?? 0.55;
     const headY = c.root.position.y + c.legLen + 0.56 * c.scale + 0.2;
     const fwd = new THREE.Vector3(Math.sin(c.root.rotation.y), 0, Math.cos(c.root.rotation.y));
     const right = new THREE.Vector3(fwd.z, 0, -fwd.x);
+    if (opt.outward) { const a = c.root.position.x + right.x * side, b = c.root.position.x - right.x * side; if (Math.abs(b) > Math.abs(a)) side = -side; }
     const pos = c.root.position.clone().addScaledVector(fwd, dist).addScaledVector(right, side * dist * 0.5);
     pos.y = headY + h + (opt.up ?? 0);
     const look = c.root.position.clone(); look.y = headY - 0.08;

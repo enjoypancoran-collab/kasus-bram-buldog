@@ -263,7 +263,7 @@ function immersive() {
   const kl = g.userData.key, hm = g.userData.hemi;
   return {
     g, bg: new THREE.Color('#0d0e14'), holoK, holoA,
-    holoCamK: () => E.camTo([0, 1.6, 2.6], [0, 1.8, -3], 1.4),
+    holoCamK: (side) => E.camTo([-side * 2.6, 1.6, 2.4], [side * 1.2, 2.3, -3.2], 1.4),
     holoCamA: () => E.camTo([0, 4.2, 3.2], [0, 0.4, -1.6], 1.4),
     async intro(bram) {
       kl.intensity = 0; hm.intensity = 0.05;
@@ -476,7 +476,7 @@ function warehouse() {
   const avalanche = [];
   return {
     g, bg: new THREE.Color('#bdb3a2'), holoK, holoA,
-    holoCamK: () => E.camTo([0, 2.2, 3.6], [machine.position.x * 0.7, 1.6, -1.4], 1.3),
+    holoCamK: (side) => E.camTo([-side * 0.8, 2.2, 3.4], [machine.position.x * 0.7, 1.6, -1.4], 1.3),
     async intro(bram) {
       E.cut([3.4, 2.2, 6.2], [-1, 1.0, 2.5]);
       bram.root.position.set(-4.2, 0, 3.6); bram.faceTo(0, 3.6);
